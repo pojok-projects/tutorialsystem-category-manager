@@ -6,7 +6,7 @@ Category Manager manages the input and output processes with simple validation f
 
 See Red highlight below for the scope of this repository.
 
-![RESTAPI.jpg](images/Content_Manager.png)
+![RESTAPI.jpg](images/Content_Manager_highlight.png)
 
 ## API END POINT
 * http://example.com/v1
