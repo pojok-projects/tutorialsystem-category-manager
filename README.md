@@ -4,6 +4,8 @@
 
 Category Manager manages the input and output processes with simple validation from the frontend to the database interface layer section.
 
+See Red highlight below for the scope of this repository.
+
 ![RESTAPI.jpg](images/Content_Manager.png)
 
 ## API END POINT
