@@ -8,15 +8,17 @@ use GuzzleHttp\Client;
 class CategoryController extends Controller
 {
     private $client;
+    private $endpoint;
 
     function __construct()
     {
         $this->client = new Client();
+        $this->endpoint = env('ENDPOINT_API');
     }
 
     private function checkduplicate($name)
     {
-        $result = $this->client->request('POST', 'https://private-anon-4dd6595d8c-dbil.apiary-mock.com/content/category/search', [
+        $result = $this->client->request('POST', $this->endpoint.'content/category/search', [
             'name' => $name
         ]);
             
@@ -42,12 +44,12 @@ class CategoryController extends Controller
     public function index()
     {
 
-        $result = $this->client->request('GET', 'http://private-anon-4dd6595d8c-dbil.apiary-mock.com/content/category');
+        $result = $this->client->request('GET', $this->endpoint.'content/category');
 
         if ($result->getStatusCode() != 200) {
             return response()->json([
                 'status' => [
-                    'code' => '500',
+                    'code' => $result->getStatusCode(),
                     'message' => 'Bad Gateway',
                 ]
             ], 500);
@@ -74,7 +76,7 @@ class CategoryController extends Controller
         if ($check_duplicate['response'] === 500) {
             return response()->json([
                 'status' => [
-                    'code' => '500',
+                    'code' => $check_duplicate['response'],
                     'message' => 'Bad Gateway',
                 ]
             ], 500);
@@ -90,7 +92,7 @@ class CategoryController extends Controller
                 'result' => $check_duplicate['result'],
             ], 409);
         }else{
-            $result = $this->client->request('POST', 'https://private-anon-4dd6595d8c-dbil.apiary-mock.com/content/category/store', [
+            $result = $this->client->request('POST', $this->endpoint.'content/category/store', [
                 'name' => $request->name,
                 'description' => $request->description
             ]);
@@ -98,10 +100,10 @@ class CategoryController extends Controller
             if ($result->getStatusCode() != 200) {
                 return response()->json([
                     'status' => [
-                        'code' => '500',
+                        'code' => $result->getStatusCode(),
                         'message' => 'Bad Gateway',
                     ]
-                ], 500);
+                ], $result->getStatusCode());
             }
 
             return response()->json(json_decode($result->getBody(), true));
@@ -110,15 +112,15 @@ class CategoryController extends Controller
     
     public function show($id)
     {
-        $result = $this->client->request('GET', 'http://private-anon-4dd6595d8c-dbil.apiary-mock.com/content/category/'.$id);
+        $result = $this->client->request('GET', $this->endpoint.'content/category/'.$id);
 
         if ($result->getStatusCode() != 200) {
             return response()->json([
                 'status' => [
-                    'code' => '500',
+                    'code' => $result->getStatusCode(),
                     'message' => 'Bad Gateway',
                 ]
-            ], 500);
+            ], $result->getStatusCode());
         }
 
         return response()->json(json_decode($result->getBody(), true));
@@ -136,17 +138,17 @@ class CategoryController extends Controller
         $this->validate($request, $rules, $customMessages);
 
         $name = $request->name;
-        $result = $this->client->request('POST', 'https://private-anon-4dd6595d8c-dbil.apiary-mock.com/content/category/search', [
+        $result = $this->client->request('POST', $this->endpoint.'content/category/search', [
             'name' => $name
         ]);
 
         if ($result->getStatusCode() != 200) {
             return response()->json([
                 'status' => [
-                    'code' => '500',
+                    'code' => $result->getStatusCode(),
                     'message' => 'Bad Gateway',
                 ]
-            ], 500);
+            ], $result->getStatusCode());
         }
 
         $search_category = json_decode($result->getBody(), true);
@@ -154,12 +156,12 @@ class CategoryController extends Controller
         if ($search_category['status']['total']==0) {
             return response()->json([
                 'status' => [
-                    'code' => '404',
+                    'code' => $result->getStatusCode(),
                     'message' => 'Category not found',
                 ]
-            ], 404);
+            ], $result->getStatusCode());
         }else{
-            return response()->json($search_category, 200);  
+            return response()->json($search_category, $result->getStatusCode());  
         }
  
               
@@ -182,7 +184,7 @@ class CategoryController extends Controller
         if ($check_duplicate['response'] === 500) {
             return response()->json([
                 'status' => [
-                    'code' => '500',
+                    'code' => $check_duplicate['response'],
                     'message' => 'Bad Gateway',
                 ]
             ], 500);
@@ -198,7 +200,7 @@ class CategoryController extends Controller
                 'result' => $check_duplicate['result'],
             ], 409);
         }else{
-            $result = $this->client->request('POST', 'https://private-anon-4dd6595d8c-dbil.apiary-mock.com/content/category/update/'.$id, [
+            $result = $this->client->request('POST', $this->endpoint.'content/category/update/'.$id, [
                 'name' => $request->name,
                 'description' => $request->description
             ]);
@@ -206,10 +208,10 @@ class CategoryController extends Controller
             if ($result->getStatusCode() != 200) {
                 return response()->json([
                     'status' => [
-                        'code' => '500',
+                        'code' => $result->getStatusCode(),
                         'message' => 'Bad Gateway',
                     ]
-                ], 500);
+                ], $result->getStatusCode());
             }
             
             return response()->json(json_decode($result->getBody(), true));
@@ -217,15 +219,15 @@ class CategoryController extends Controller
     }
     public function destroy($id)
     {
-        $result = $this->client->request('POST', 'https://private-anon-4dd6595d8c-dbil.apiary-mock.com/content/category/delete/'.$id);
+        $result = $this->client->request('POST', $this->endpoint.'content/category/delete/'.$id);
 
         if ($result->getStatusCode() != 200) {
             return response()->json([
                 'status' => [
-                    'code' => '500',
+                    'code' => $result->getStatusCode(),
                     'message' => 'Bad Gateway',
                 ]
-            ], 500);
+            ], $result->getStatusCode());
         }
         
         return response()->json(json_decode($result->getBody(), true));
