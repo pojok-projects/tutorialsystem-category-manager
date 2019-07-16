@@ -19,7 +19,9 @@ class CategoryController extends Controller
     private function checkduplicate($name)
     {
         $result = $this->client->request('POST', $this->endpoint.'content/category/search', [
-            'name' => $name
+            'form_params' => [
+                'name' => $name
+            ]
         ]);
             
         if ($result->getStatusCode() != 200) {
@@ -28,7 +30,7 @@ class CategoryController extends Controller
             ];
         }else{
             $check_duplicate = json_decode($result->getBody(), true);
-            if ($check_duplicate['status']['total'] == 0) {
+            if ($check_duplicate['status']['total'] == 2) {
                 return [
                     'response' => false
                 ];
@@ -93,8 +95,10 @@ class CategoryController extends Controller
             ], 409);
         }else{
             $result = $this->client->request('POST', $this->endpoint.'content/category/store', [
-                'name' => $request->name,
-                'description' => $request->description
+                'form_params' => [
+                    'name' => $request->name,
+                    'description' => $request->description
+                ]
             ]);
             
             if ($result->getStatusCode() != 200) {
@@ -139,7 +143,9 @@ class CategoryController extends Controller
 
         $name = $request->name;
         $result = $this->client->request('POST', $this->endpoint.'content/category/search', [
-            'name' => $name
+            'form_params' => [
+                'name' => $name
+            ]
         ]);
 
         if ($result->getStatusCode() != 200) {
@@ -201,8 +207,10 @@ class CategoryController extends Controller
             ], 409);
         }else{
             $result = $this->client->request('POST', $this->endpoint.'content/category/update/'.$id, [
-                'name' => $request->name,
-                'description' => $request->description
+                'form_params' => [
+                    'name' => $request->name,
+                    'description' => $request->description
+                ]
             ]);
 
             if ($result->getStatusCode() != 200) {
