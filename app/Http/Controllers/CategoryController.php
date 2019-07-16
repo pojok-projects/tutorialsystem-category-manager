@@ -30,7 +30,7 @@ class CategoryController extends Controller
             ];
         }else{
             $check_duplicate = json_decode($result->getBody(), true);
-            if ($check_duplicate['status']['total'] == 2) {
+            if ($check_duplicate['status']['total'] == 0) {
                 return [
                     'response' => false
                 ];
@@ -64,15 +64,15 @@ class CategoryController extends Controller
     public function create(Request $request)
     {
         $rules = [
-            'name' => 'required',
-            'description' => 'required'
+            'name' => 'required|max:255|alpha_dash',
+            'description' => 'required|max:255|alpha_dash'
         ];
 
         $customMessages = [
              'required' => 'Please fill attribute :attribute'
         ];
         $this->validate($request, $rules, $customMessages);
-        
+
         $check_duplicate = self::checkduplicate($request->name);
 
         if ($check_duplicate['response'] === 500) {
@@ -133,7 +133,7 @@ class CategoryController extends Controller
     public function search(Request $request)
     {
         $rules = [
-            'name' => 'required'
+            'name' => 'required|max:255|alpha_dash'
         ];
 
         $customMessages = [
@@ -176,8 +176,8 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     { 
         $rules = [
-            'name' => 'required',
-            'description' => 'required'
+            'name' => 'required|max:255|alpha_dash',
+            'description' => 'required|max:255|alpha_dash'
         ];
 
         $customMessages = [
