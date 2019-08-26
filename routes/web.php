@@ -15,7 +15,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix'=>'v1'], function() use($router){
+$router->group(['prefix'=>'catm/v1'], function() use($router){
 	$router->get('/category', 'CategoryController@index');
 	$router->post('/category/store', 'CategoryController@create');
 	$router->get('/category/{id}', 'CategoryController@show');
