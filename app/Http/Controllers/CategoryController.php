@@ -132,18 +132,9 @@ class CategoryController extends Controller
 
     public function search()
     {
-        $rules = [
-            'name' => 'required|max:255'
-        ];
-
-        $customMessages = [
-             'required' => 'Please fill attribute :attribute'
-        ];
-        $this->validate($request, $rules, $customMessages);
-
         $result = $this->client->request('POST', $this->endpoint.'content/category/search', [
             'form_params' => [
-                'name' => $request->name
+                'name' => $_GET['name']
             ]
         ]);
 
