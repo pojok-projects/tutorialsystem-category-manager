@@ -19,7 +19,7 @@ $router->group(['prefix'=>'catm/v1'], function() use($router){
 	$router->get('/category', 'CategoryController@index');
 	$router->post('/category/store', 'CategoryController@create');
 	$router->get('/category/{id}', 'CategoryController@show');
-	$router->post('/category/search', 'CategoryController@search');
+	$router->get('/category/search', 'CategoryController@search');
 	$router->put('/category/update/{id}', 'CategoryController@update');
 	$router->delete('/category/delete/{id}', 'CategoryController@destroy');
 });
