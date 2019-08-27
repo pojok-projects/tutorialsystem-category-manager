@@ -64,8 +64,8 @@ class CategoryController extends Controller
     public function create(Request $request)
     {
         $rules = [
-            'name' => 'required|max:255|alpha_dash',
-            'description' => 'required|max:255|alpha_dash'
+            'name' => 'required|max:255|regex:/[a-zA-Z0-9\s]+/',
+            'description' => 'required|max:255|regex:/[a-zA-Z0-9\s]+/'
         ];
 
         $customMessages = [
@@ -133,7 +133,7 @@ class CategoryController extends Controller
     public function search()
     {
         $rules = [
-            'name' => 'required|max:255|alpha_dash'
+            'name' => 'required|max:255'
         ];
 
         $customMessages = [
@@ -166,8 +166,8 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     { 
         $rules = [
-            'name' => 'required|max:255|alpha_dash',
-            'description' => 'required|max:255|alpha_dash'
+            'name' => 'required|max:255|regex:/[a-zA-Z0-9\s]+/',
+            'description' => 'required|max:255|regex:/[a-zA-Z0-9\s]+/'
         ];
 
         $customMessages = [
