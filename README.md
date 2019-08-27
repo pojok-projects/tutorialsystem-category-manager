@@ -9,7 +9,7 @@ See Red highlight below for the scope of this repository.
 ![RESTAPI.jpg](images/Content_Manager_highlight.png)
 
 ## API END POINT
-* http://example.com/v1
+* https://api.example.com/catm/Sv1
 
 ## API Docs
 * https://cm27.docs.apiary.io/
