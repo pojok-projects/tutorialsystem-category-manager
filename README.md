@@ -20,7 +20,7 @@ See Red highlight below for the scope of this repository.
 | `category`             | GET    | Get All Data      |
 | `category/store`       | POST   | Save Data         |
 | `category/{id}`        | GET    | Get Data by ID    |
-| `category/search`      | POST   | Search Data Query |
+| `category/search`      | GET   | Search Data Query |
 | `category/update/{id}` | PUT    | Update Data by ID |
 | `category/delete/{id}` | DELETE | Delete Data by ID |
 
@@ -38,9 +38,6 @@ See Red highlight below for the scope of this repository.
 
 ### [GET] Get Detail Category
 ![RESTAPI.jpg](images/04-get-detail-category.png)
-
-### [POST] Search Category
-![RESTAPI.jpg](images/05-post-search-category.png)
 
 ### [PUT] Update Category Success
 ![RESTAPI.jpg](images/06-put-update-category-success.png)
