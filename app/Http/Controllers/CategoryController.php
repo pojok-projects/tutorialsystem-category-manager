@@ -130,7 +130,7 @@ class CategoryController extends Controller
         return response()->json(json_decode($result->getBody(), true));
     }
 
-    public function search(Request $request)
+    public function search()
     {
         $rules = [
             'name' => 'required|max:255|alpha_dash'
@@ -141,10 +141,9 @@ class CategoryController extends Controller
         ];
         $this->validate($request, $rules, $customMessages);
 
-        $name = $request->name;
         $result = $this->client->request('POST', $this->endpoint.'content/category/search', [
             'form_params' => [
-                'name' => $name
+                'name' => $request->name
             ]
         ]);
 
@@ -159,16 +158,7 @@ class CategoryController extends Controller
 
         $search_category = json_decode($result->getBody(), true);
 
-        if ($search_category['status']['total']==0) {
-            return response()->json([
-                'status' => [
-                    'code' => $result->getStatusCode(),
-                    'message' => 'Category not found',
-                ]
-            ], $result->getStatusCode());
-        }else{
-            return response()->json($search_category, $result->getStatusCode());  
-        }
+        return response()->json($search_category, $result->getStatusCode());  
  
               
     }
