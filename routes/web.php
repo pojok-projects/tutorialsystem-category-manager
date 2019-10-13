@@ -18,8 +18,8 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix'=>'catm/v1'], function() use($router){
 	$router->get('/category', 'CategoryController@index');
 	$router->post('/category/store', 'CategoryController@create');
-	$router->get('/category/{id}', 'CategoryController@show');
 	$router->get('/category/search', 'CategoryController@search');
+	$router->get('/category/{id}', 'CategoryController@show');
 	$router->put('/category/update/{id}', 'CategoryController@update');
 	$router->delete('/category/delete/{id}', 'CategoryController@destroy');
 });
