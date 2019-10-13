@@ -1,80 +1,195 @@
 FORMAT: 1A
 HOST: http://polls.apiblueprint.org/
 
-# Tutorialinaja - Category Manager
+# Category Manager (Category Manager)
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+DOCS Category Manager Api
 
-## Questions Collection [/questions]
+## API Host
+* HOST: https://api.tutorialinaja.tech
 
-### List All Questions [GET]
+##Api Version
+* /catm/v1
+
+## API Main End Point
+* https://api.tutorialinaja.tech/catm/v1
+
+## Get Category [/category]
+___
+**Table Routes:**
+| URL             | Method | INFO                   |
+| ----------------| ------ | -----------------------|
+| `/category`     | GET    | Get Category           |
+
+### Get Category [GET /category]
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+        {
+            status: {
+                code: "200",
+                message: "index list query has been performed, data has been found",
+                total: 2
+            },
+            result: [
+                {
+                    updated_at: "2019-09-19T09:44:35+00:00",
+                    created_at: "2019-09-19T09:44:35+00:00",
+                    description: "Movie Action",
+                    id: "73603c73-6936-4009-9da3-95d1e26a54d0",
+                    name: "Action"
+                },
+                {
+                    updated_at: "2019-09-19T09:47:28+00:00",
+                    created_at: "2019-09-19T09:47:28+00:00",
+                    description: "Semua Video Tutorial Tentang Tema Pendidikan",
+                    id: "e34c1d9e-9b20-4141-89c8-57b58517b1c8",
+                    name: "Pendidikan"
+                }
+            ]
+        }
+        
+## Save Data Category [/category/store]
+___
+**Table Routes:**
+| URL                   | Method | INFO                   |
+| --------------------- | ------ | -----------------------|
+| `/category/store`     | GET    | Get Category           |
 
-### Create a New Question [POST]
+**Save Data Category Parameter:**
+| Parameter           | type   | Status   | Description                        |
+| ------------------- | ------ | -------- | ---------------------------------- |
+| `name`              | String | required | Category name                      |
+| `description`       | String | required | Description Category               |
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+### Save Data Category [POST /category/store]
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "name": "Python",
+            "description": "Semua Video Tutorial Tentang Tema Python"
         }
 
-+ Response 201 (application/json)
++ Response 200 (application/json)
 
-    + Headers
-
-            Location: /questions/2
-
-    + Body
-
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+        {
+            "status": {
+                "code": "200",
+                "message": "data has been saved"
+            },
+            "result": {
+                "id": "a9e56fb0-0d43-45bc-ac7e-8747d3266119"
             }
+        }
+        
+## Get Data by ID [/category/{id}]
+___
+**Table Routes:**
+| URL              | Method | INFO                    |
+| ---------------- | ------ | ----------------------- |
+| `/category/{id}` | GET    | Get Category by ID      |
+
+### Get Data by ID [GET /category/{id}]
+
++ Parameter
+    + id: `a9e56fb0-0d43-45bc-ac7e-8747d3266119` (string, required) - Id of Category
+
++ Response 200 (application/json)
+
+        {
+            "updated_at": "2019-10-13T04:10:13+00:00",
+            "created_at": "2019-10-13T04:10:13+00:00",
+            "description": "Semua Video Tutorial Tentang Tema Python",
+            "id": "a9e56fb0-0d43-45bc-ac7e-8747d3266119",
+            "name": "Python"
+        }
+        
+## Search Data by Name [/category/search]
+___
+**Table Routes:**
+| URL                            | Method | INFO                    |
+| ------------------------------ | ------ | ----------------------- |
+| `/category/search?name={name}` | GET    | Search Data by Name     |
+
+### Search Data by Name [GET /category/search?name={name}]
+
++ Parameter
+    + name: `Python` (string, required) - Name of Category
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+                "code": "200",
+                "message": "search query has been performed, data has been found",
+                "total": 1
+            },
+            "result": [
+                {
+                    "updated_at": "2019-10-13T04:10:13+00:00",
+                    "created_at": "2019-10-13T04:10:13+00:00",
+                    "description": "Semua Video Tutorial Tentang Tema Python",
+                    "id": "a9e56fb0-0d43-45bc-ac7e-8747d3266119",
+                    "name": "Python"
+                }
+            ]
+        }
+        
+## Update Data by ID [/category/update/{id}]
+___
+**Table Routes:**
+| URL                     | Method | INFO                    |
+| ----------------------- | ------ | ----------------------- |
+| `/category/update/{id}` | GET    | Update Data by ID       |
+
+**Save Data Category Parameter:**
+| Parameter           | type   | Status   | Description                        |
+| ------------------- | ------ | -------- | ---------------------------------- |
+| `name`              | String | required | Category name                      |
+| `description`       | String | required | Description Category               |
+
+### Update Data by ID [PUT /category/update/{id}]
+
++ Parameter
+    + id: `a9e56fb0-0d43-45bc-ac7e-8747d3266119` (string, required) - Id of Category
+
++ Request (application/json)
+
+        {
+            "name": "Python Programming",
+            "description": "Semua Video Tutorial Tentang Tema Python"
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "status": {
+                "code": "200",
+                "message": "data has been updated"
+            },
+            "result": {
+                "id": "a9e56fb0-0d43-45bc-ac7e-8747d3266119"
+            }
+        }
+        
+## Delete Data by ID [/category/delete/{id}]
+___
+**Table Routes:**
+| URL                     | Method | INFO                    |
+| ----------------------- | ------ | ----------------------- |
+| `/category/delete/{id}` | GET    | Delete Data by ID       |
+
+### Delete Data by ID [PUT /category/delete/{id}]
+
++ Parameter
+    + id: `a9e56fb0-0d43-45bc-ac7e-8747d3266119` (string, required) - Id of Category
+        
++ Response 200 (application/json)
+
+        {
+            "status": {
+                "code": "200",
+                "message": "data has been deleted"
+            }
+        }
